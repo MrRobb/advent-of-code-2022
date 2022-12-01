@@ -3,19 +3,19 @@
 use advent_of_code_2022::day01;
 
 fn main() {
-	let mains = [day01::main];
+    let mains = [day01::main];
 
-	let now = std::time::Instant::now();
+    let now = std::time::Instant::now();
 
-	for (day, main) in mains.iter().enumerate() {
-		println!(
-			"------------------------------------ DAY {} ------------------------------------",
-			day + 1
-		);
-		main();
-		println!();
-	}
+    for (day, main) in mains.iter().enumerate() {
+        println!(
+            "------------------------------------ DAY {} ------------------------------------",
+            day + 1
+        );
+        main();
+        println!();
+    }
 
-	println!("------------------------------------  ALL   ------------------------------------");
-	println!("Execution time: {:?}\n", now.elapsed());
+    println!("------------------------------------  ALL   ------------------------------------");
+    println!("Execution time: {:?}\n", now.elapsed());
 }
