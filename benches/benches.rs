@@ -1,6 +1,6 @@
 use std::fs::read_to_string;
 
-use advent_of_code_2021::day01::{calculate_max_3_calories, calculate_max_calories};
+use advent_of_code_2022::day01::{calculate_max_3_calories, calculate_max_calories};
 use criterion::{criterion_group, criterion_main, Criterion};
 
 fn bench1(c: &mut Criterion) {

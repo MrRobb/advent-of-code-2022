@@ -1,13 +1,9 @@
 #![allow(clippy::must_use_candidate, clippy::missing_panics_doc)]
 
-use advent_of_code_2021::{
-	day01
-};
+use advent_of_code_2022::day01;
 
 fn main() {
-	let mains = [
-		day01::main,
-	];
+	let mains = [day01::main];
 
 	let now = std::time::Instant::now();
 
