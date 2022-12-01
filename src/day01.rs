@@ -1,7 +1,3 @@
-#![allow(clippy::must_use_candidate, clippy::missing_panics_doc)]
-
-use std::fs::read_to_string;
-
 use itertools::Itertools;
 
 pub fn calculate_max_calories(input: &str) -> u64 {
@@ -23,7 +19,7 @@ pub fn calculate_max_3_calories(input: &str) -> u64 {
 }
 
 pub fn main() {
-	let input = read_to_string("input/day01.txt").expect("Input file not found");
+	let input = std::fs::read_to_string("input/day01.txt").expect("Input file not found");
 	let now = std::time::Instant::now();
 	println!("PART 1 = {}", calculate_max_calories(&input));
 	println!("PART 2 = {}", calculate_max_3_calories(&input));
