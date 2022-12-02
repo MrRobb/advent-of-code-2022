@@ -1,3 +1,5 @@
+#![allow(clippy::must_use_candidate, clippy::missing_panics_doc)]
+
 use itertools::Itertools;
 
 pub fn calculate_max_calories(input: &str) -> u64 {
