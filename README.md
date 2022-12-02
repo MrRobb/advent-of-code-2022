@@ -1,4 +1,4 @@
-# Advent of Code 2022
+# 🎄 Advent of Code 2022
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/MrRobb/advent-of-code-2022/blob/master/LICENSE)
 
