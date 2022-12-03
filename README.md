@@ -2,13 +2,14 @@
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/MrRobb/advent-of-code-2022/blob/master/LICENSE)
 
-|        | Problem                                            | Solution                                                                           | Execution time        | Finished |
-|--------|----------------------------------------------------|------------------------------------------------------------------------------------|-----------------------|----------|
-| Day 1  | [Problem 1](https://adventofcode.com/2022/day/1)   | [day01.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day01.rs)   | 27.138 μs + 30.321 μs | ✓        |
-| Day 2  | [Problem 2](https://adventofcode.com/2022/day/2)   | [day02.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day02.rs)   | 34.969 μs + 48.740 μs | ✓        |
-| Day 3  | [Problem 3](https://adventofcode.com/2022/day/3)   | [day03.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day03.rs)   | 234.95 μs + 258.91 μs | ✓        |
+|       | Problem                                          | Solution                                                                         | Execution time        | Lines of code | Finished |
+|-------|--------------------------------------------------|----------------------------------------------------------------------------------|-----------------------|---------------|----------|
+| Day 1 | [Problem 1](https://adventofcode.com/2022/day/1) | [day01.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day01.rs) | 27.138 μs + 30.321 μs | 25            | ✓        |
+| Day 2 | [Problem 2](https://adventofcode.com/2022/day/2) | [day02.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day02.rs) | 34.969 μs + 48.740 μs | 87            | ✓        |
+| Day 3 | [Problem 3](https://adventofcode.com/2022/day/3) | [day03.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day03.rs) | 234.95 μs + 258.91 μs | 47            | ✓        |
 
-> The benchmarks are measured (non-scientifically) with [cargo-criterion](https://github.com/bheisler/cargo-criterion) on a AMD Ryzen 5 3600 Desktop.
+> The benchmarks are measured (non-scientifically) with [cargo-criterion](https://github.com/bheisler/cargo-criterion) on a AMD Ryzen 5 3600 Desktop. More in the [benchmarks](#benchmarks) section.
+> The lines of code are measured using [ghloc](https://github.com/MrRobb/ghloc-rs), excluding comments and empty lines.
 
 ## Install Rust
 
@@ -46,4 +47,22 @@ cargo run --release
 
 ```sh
 cargo run --release --bin day01
+```
+
+## Benchmarks
+
+### Install Criterion
+
+To run the benchmarks you need to install [cargo-criterion](https://github.com/bheisler/cargo-criterion) first:
+
+```sh
+cargo install cargo-criterion
+```
+
+### Run benchmarks
+
+Once you have Criterion installed, you can run the benchmarks with:
+
+```sh
+cargo criterion
 ```

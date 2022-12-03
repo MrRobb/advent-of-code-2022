@@ -7,10 +7,10 @@ rust-version = "1.56"
 default-run = "advent-of-code-2022"
 
 [dependencies]
-itertools = "0.10.5"
+itertools = "0.10"
 
 [dev-dependencies]
-criterion = "0.3"
+criterion = "0.4"
 
 [[bench]]
 name = "benches"
