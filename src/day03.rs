@@ -1,24 +1,6 @@
 #![allow(clippy::must_use_candidate, clippy::missing_panics_doc)]
 
-use std::collections::HashSet;
-
 use itertools::Itertools;
-
-fn get_intersection2(a: &str, b: &str) -> char {
-    let a_set = a.chars().collect::<HashSet<_>>();
-    let b_set = b.chars().collect::<HashSet<_>>();
-    let common = a_set.intersection(&b_set).next().unwrap();
-    *common
-}
-
-fn get_intersection3(a: &str, b: &str, c: &str) -> char {
-    let a_set = a.chars().collect::<HashSet<_>>();
-    let b_set = b.chars().collect::<HashSet<_>>();
-    let c_set = c.chars().collect::<HashSet<_>>();
-    let i_set = a_set.intersection(&b_set).copied().collect::<HashSet<char>>();
-    let common = i_set.intersection(&c_set).next().unwrap();
-    *common
-}
 
 /// Calculates the priority given a character.
 /// - Lowercase item types a through z have priorities 1 through 26.
@@ -32,7 +14,10 @@ pub fn get_item_type(input: &str) -> u64 {
         .lines()
         .map(|line| {
             let (a, b) = line.split_at(line.len() / 2);
-            let common = get_intersection2(a, b);
+            let common = a
+                .chars()
+                .find(|x| b.contains(*x))
+                .expect("No common character found in line");
             char_to_priority(common)
         })
         .sum()
@@ -43,7 +28,10 @@ pub fn get_badge(input: &str) -> u64 {
         .lines()
         .tuples()
         .map(|(a, b, c)| {
-            let common = get_intersection3(a, b, c);
+            let common = a
+                .chars()
+                .find(|x| b.contains(*x) && c.contains(*x))
+                .expect("No common character");
             char_to_priority(common)
         })
         .sum()
