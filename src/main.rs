@@ -4,7 +4,7 @@
 use advent_of_code_2022::*;
 
 fn main() {
-    let mains = [day01::main, day02::main, day03::main];
+    let mains = [day01::main, day02::main, day03::main, day04::main];
 
     let now = std::time::Instant::now();
 
