@@ -10,7 +10,7 @@ fn parse_range(range: &str) -> ((u64, u64), (u64, u64)) {
     (p1, p2)
 }
 
-pub fn get_item_type(input: &str) -> u64 {
+pub fn get_fully_contained(input: &str) -> u64 {
     input
         .lines()
         .map(|line| {
@@ -20,7 +20,7 @@ pub fn get_item_type(input: &str) -> u64 {
         .sum()
 }
 
-pub fn get_badge(input: &str) -> u64 {
+pub fn get_overlapping(input: &str) -> u64 {
     input
         .lines()
         .map(|line| {
@@ -33,7 +33,7 @@ pub fn get_badge(input: &str) -> u64 {
 pub fn main() {
     let input = std::fs::read_to_string("input/day04.txt").expect("Input file not found");
     let now = std::time::Instant::now();
-    println!("PART 1 = {}", get_item_type(&input));
-    println!("PART 2 = {}", get_badge(&input));
+    println!("PART 1 = {}", get_fully_contained(&input));
+    println!("PART 2 = {}", get_overlapping(&input));
     println!("Execution time: {:?}", now.elapsed());
 }

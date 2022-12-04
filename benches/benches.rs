@@ -19,8 +19,8 @@ fn bench1(c: &mut Criterion) {
     c.bench_function("Day 3 | Part 1", |b| b.iter(|| day03::get_item_type(&input03)));
     c.bench_function("Day 3 | Part 2", |b| b.iter(|| day03::get_badge(&input03)));
 
-    c.bench_function("Day 4 | Part 1", |b| b.iter(|| day04::get_item_type(&input04)));
-    c.bench_function("Day 4 | Part 2", |b| b.iter(|| day04::get_badge(&input04)));
+    c.bench_function("Day 4 | Part 1", |b| b.iter(|| day04::get_fully_contained(&input04)));
+    c.bench_function("Day 4 | Part 2", |b| b.iter(|| day04::get_overlapping(&input04)));
 }
 
 criterion_group!(benches, bench1);
