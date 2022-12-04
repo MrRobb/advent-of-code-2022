@@ -41,6 +41,6 @@ pub fn main() {
     let input = std::fs::read_to_string("input/day03.txt").expect("Input file not found");
     let now = std::time::Instant::now();
     println!("PART 1 = {}", get_item_type(&input));
-    println!("PART 1 = {}", get_badge(&input));
+    println!("PART 2 = {}", get_badge(&input));
     println!("Execution time: {:?}", now.elapsed());
 }
