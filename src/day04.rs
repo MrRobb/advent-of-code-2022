@@ -2,32 +2,28 @@
 
 fn parse_range(range: &str) -> ((u64, u64), (u64, u64)) {
     let (p1, p2) = range.split_once(',').unwrap();
-    let (p1, p2) = (p1.split_once('-').unwrap(), p2.split_once('-').unwrap());
-    let (p1, p2) = (
-        (p1.0.parse::<u64>().unwrap(), p1.1.parse::<u64>().unwrap()),
-        (p2.0.parse::<u64>().unwrap(), p2.1.parse::<u64>().unwrap()),
-    );
-    (p1, p2)
+    let p1 = p1.split_once('-').unwrap();
+    let p2 = p2.split_once('-').unwrap();
+    (
+        (p1.0.parse().unwrap(), p1.1.parse().unwrap()),
+        (p2.0.parse().unwrap(), p2.1.parse().unwrap()),
+    )
 }
 
-pub fn get_fully_contained(input: &str) -> u64 {
+pub fn get_fully_contained(input: &str) -> usize {
     input
         .lines()
-        .map(|line| {
-            let (p1, p2) = parse_range(line);
-            u64::from((p1.0 <= p2.0 && p1.1 >= p2.1) || (p1.0 >= p2.0 && p1.1 <= p2.1))
-        })
-        .sum()
+        .map(parse_range)
+        .filter(|((a, b), (c, d))| (a <= c && b >= d) || (a >= c && b <= d))
+        .count()
 }
 
-pub fn get_overlapping(input: &str) -> u64 {
+pub fn get_overlapping(input: &str) -> usize {
     input
         .lines()
-        .map(|line| {
-            let (p1, p2) = parse_range(line);
-            u64::from(p1.0.max(p2.0) <= p1.1.min(p2.1))
-        })
-        .sum()
+        .map(parse_range)
+        .filter(|((a, b), (c, d))| a.max(c) <= b.min(d))
+        .count()
 }
 
 pub fn main() {
