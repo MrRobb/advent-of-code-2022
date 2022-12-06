@@ -24,6 +24,10 @@ fn bench1(c: &mut Criterion) {
     let input05 = read_to_string("input/day05.txt").expect("Input file not found");
     c.bench_function("Day 5 | Part 1", |b| b.iter(|| day05::crate_on_top_9000(&input05)));
     c.bench_function("Day 5 | Part 2", |b| b.iter(|| day05::crate_on_top_9001(&input05)));
+
+    let input06 = read_to_string("input/day06.txt").expect("Input file not found");
+    c.bench_function("Day 6 | Part 1", |b| b.iter(|| day06::find_marker(&input06)));
+    c.bench_function("Day 6 | Part 2", |b| b.iter(|| day06::find_message(&input06)));
 }
 
 criterion_group!(benches, bench1);
