@@ -1,156 +1,63 @@
 #![allow(clippy::must_use_candidate, clippy::missing_panics_doc, clippy::redundant_else)]
 
-use std::collections::{HashMap, VecDeque};
-use std::mem::drop;
+use std::str::FromStr;
+use std::{collections::HashMap, path::PathBuf};
 
 use itertools::Itertools;
-use parse_display::{Display, FromStr};
 
-#[derive(Display, FromStr, PartialEq, Debug)]
-enum FilesystemNode {
-    #[display("dir {name}")]
-    Directory {
-        name: String,
-        #[from_str(default)]
-        children: HashMap<String, FilesystemNode>,
-        #[from_str(default)]
-        size: u64,
-    },
-    #[display("{size} {name}")]
-    File { name: String, size: u64 },
-}
-
-impl FilesystemNode {
-    const fn is_directory(&self) -> bool {
-        matches!(self, Self::Directory { .. })
-    }
-
-    const fn size(&self) -> u64 {
-        match self {
-            Self::File { size, .. } | Self::Directory { size, .. } => *size,
-        }
-    }
-
-    fn iter(&self) -> FilesystemIterator {
-        FilesystemIterator {
-            queue: vec![self].into(),
-        }
-    }
-}
-
-struct FilesystemIterator<'a> {
-    queue: VecDeque<&'a FilesystemNode>,
-}
-
-impl<'a> Iterator for FilesystemIterator<'a> {
-    type Item = &'a FilesystemNode;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        let node = self.queue.pop_front()?;
-        match node {
-            FilesystemNode::Directory { ref children, .. } => {
-                self.queue.extend(children.values());
-            },
-            FilesystemNode::File { .. } => {},
-        }
-        Some(node)
-    }
-}
-
-#[derive(Display, FromStr, PartialEq, Debug)]
-enum Commands {
-    #[display("cd {0}")]
-    Cd(String),
-    #[display("ls")]
-    Ls,
-}
-
-fn build_filesystem_i<'a>(
-    mut commands: impl Iterator<Item = &'a str>,
-    current_dir: &mut FilesystemNode,
-) -> impl Iterator<Item = &'a str> {
-    while let Some(next_command) = commands.next() {
-        let mut lines = next_command.lines();
-        let command = lines.next().unwrap().parse().unwrap();
-        match command {
-            Commands::Cd(dir) => match dir.as_str() {
+fn build_filesystem(input: &str) -> HashMap<PathBuf, u64> {
+    let mut filesystem = HashMap::new();
+    let mut current_dir = PathBuf::from("/");
+    filesystem.insert(current_dir.clone(), 0);
+    let commands = input.split("$ ").skip(1);
+    for command in commands {
+        let mut lines = command.lines();
+        let mut command = lines.next().unwrap().split_ascii_whitespace();
+        match command.next().unwrap() {
+            "cd" => match command.next().unwrap() {
+                "/" => {
+                    current_dir = PathBuf::from("/");
+                },
                 ".." => {
-                    return commands;
+                    current_dir.pop();
                 },
-                _ => match current_dir {
-                    FilesystemNode::Directory { ref mut children, .. } => {
-                        commands = build_filesystem_i(commands, children.get_mut(&dir).unwrap());
-                    },
-                    FilesystemNode::File { .. } => panic!("Cannot cd into files"),
+                dir => {
+                    current_dir.push(dir);
                 },
             },
-            Commands::Ls => match current_dir {
-                FilesystemNode::Directory { ref mut children, .. } => {
-                    *children = lines
-                        .flat_map(str::parse)
-                        .map(|item| match item {
-                            FilesystemNode::File { ref name, .. } | FilesystemNode::Directory { ref name, .. } => {
-                                (name.clone(), item)
-                            },
-                        })
-                        .collect();
-                },
-                FilesystemNode::File { .. } => panic!("Cannot list files"),
+            "ls" => {
+                for line in lines {
+                    let (size_or_dir, name) = line.split(' ').collect_tuple().unwrap();
+                    match size_or_dir.parse::<u64>() {
+                        Ok(size) => {
+                            // File
+                            for ancestor in current_dir.ancestors() {
+                                *filesystem.get_mut(&ancestor.to_path_buf()).unwrap() += size;
+                            }
+                        },
+                        Err(_) => {
+                            // Directory
+                            filesystem.insert(current_dir.join(name), 0);
+                        },
+                    }
+                }
             },
+            _ => unreachable!(),
         }
     }
-    commands
-}
-
-fn build_filesystem(input: &str) -> FilesystemNode {
-    let mut commands = input.split("$ ").skip(1);
-    let mut lines = commands.next().unwrap().lines();
-    let command = lines.next().unwrap().parse().unwrap();
-    if let Commands::Cd(root) = command {
-        let mut root = FilesystemNode::Directory {
-            name: root,
-            children: HashMap::new(),
-            size: 0,
-        };
-        drop(build_filesystem_i(&mut commands, &mut root));
-        root
-    } else {
-        panic!("Invalid input: {:?}", commands.collect_vec())
-    }
-}
-
-fn calculate_sizes(filesystem: &mut FilesystemNode) -> u64 {
-    match filesystem {
-        FilesystemNode::Directory {
-            ref mut children,
-            ref mut size,
-            ..
-        } => {
-            *size = children.values_mut().map(calculate_sizes).sum();
-            *size
-        },
-        FilesystemNode::File { ref size, .. } => *size,
-    }
+    filesystem
 }
 
 pub fn sum_of_directories(input: &str) -> u64 {
-    let mut filesystem = build_filesystem(input);
-    let _filesystem_size = calculate_sizes(&mut filesystem);
-    filesystem
-        .iter()
-        .filter(|node| node.is_directory())
-        .map(FilesystemNode::size)
-        .filter(|size| *size <= 100_000)
-        .sum()
+    let filesystem = build_filesystem(input);
+    filesystem.into_values().filter(|size| *size <= 100_000).sum()
 }
 
 pub fn smallest_directory(input: &str) -> u64 {
-    let mut filesystem = build_filesystem(input);
-    let filesystem_size = calculate_sizes(&mut filesystem);
+    let filesystem = build_filesystem(input);
+    let filesystem_size = *filesystem.get(&PathBuf::from_str("/").unwrap()).unwrap();
     filesystem
-        .iter()
-        .filter(|node| node.is_directory())
-        .map(FilesystemNode::size)
+        .into_values()
         .filter(|size| *size >= (filesystem_size - 40_000_000))
         .min()
         .unwrap()
