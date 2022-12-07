@@ -28,6 +28,10 @@ fn bench1(c: &mut Criterion) {
     let input06 = read_to_string("input/day06.txt").expect("Input file not found");
     c.bench_function("Day 6 | Part 1", |b| b.iter(|| day06::find_marker(&input06)));
     c.bench_function("Day 6 | Part 2", |b| b.iter(|| day06::find_message(&input06)));
+
+    let input07 = read_to_string("input/day07.txt").expect("Input file not found");
+    c.bench_function("Day 7 | Part 1", |b| b.iter(|| day07::sum_of_directories(&input07)));
+    c.bench_function("Day 7 | Part 2", |b| b.iter(|| day07::smallest_directory(&input07)));
 }
 
 criterion_group!(benches, bench1);
