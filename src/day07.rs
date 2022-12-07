@@ -114,8 +114,7 @@ fn build_filesystem(input: &str) -> FilesystemNode {
         };
         drop(build_filesystem_i(&mut commands, &mut root));
         root
-    }
-    else {
+    } else {
         panic!("Invalid input: {:?}", commands.collect_vec())
     }
 }
@@ -148,15 +147,13 @@ pub fn sum_of_directories(input: &str) -> u64 {
 pub fn smallest_directory(input: &str) -> u64 {
     let mut filesystem = build_filesystem(input);
     let filesystem_size = calculate_sizes(&mut filesystem);
-    let mut min_size = u64::MAX;
-    for node in filesystem.iter() {
-        if let FilesystemNode::Directory { ref size, .. } = node {
-            if *size >= (filesystem_size - 40_000_000) && *size <= min_size {
-                min_size = *size;
-            }
-        }
-    }
-    min_size
+    filesystem
+        .iter()
+        .filter(|node| node.is_directory())
+        .map(FilesystemNode::size)
+        .filter(|size| *size >= (filesystem_size - 40_000_000))
+        .min()
+        .unwrap()
 }
 
 pub fn main() {
