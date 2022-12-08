@@ -1,7 +1,8 @@
 #![allow(clippy::must_use_candidate, clippy::missing_panics_doc, clippy::redundant_else)]
 
+use std::collections::HashMap;
+use std::path::PathBuf;
 use std::str::FromStr;
-use std::{collections::HashMap, path::PathBuf};
 
 use itertools::Itertools;
 
