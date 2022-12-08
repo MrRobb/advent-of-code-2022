@@ -10,29 +10,29 @@ use itertools::{FoldWhile, Itertools};
 
 #[derive(Debug, Clone, Copy)]
 struct Tree {
-    height: i64,
+    height: i32,
     visible_top: bool,
     visible_bottom: bool,
     visible_left: bool,
     visible_right: bool,
 }
 
+impl Tree {
+    fn from_char(c: char) -> Self {
+        Self {
+            height: c.to_digit(10).unwrap() as i32,
+            visible_top: false,
+            visible_bottom: false,
+            visible_left: false,
+            visible_right: false,
+        }
+    }
+}
+
 pub fn find_visible_trees(input: &str) -> usize {
     let mut forest: Vec<Vec<Tree>> = input
         .lines()
-        .enumerate()
-        .map(|(i, line)| {
-            line.chars()
-                .enumerate()
-                .map(|(j, c)| Tree {
-                    height: i64::from(c.to_digit(10).unwrap()),
-                    visible_top: false,
-                    visible_bottom: false,
-                    visible_left: false,
-                    visible_right: false,
-                })
-                .collect()
-        })
+        .map(|line| line.chars().map(Tree::from_char).collect())
         .collect();
 
     // Visible top
@@ -42,7 +42,6 @@ pub fn find_visible_trees(input: &str) -> usize {
             if forest[row][col].height > max_height {
                 forest[row][col].visible_top = true;
                 max_height = forest[row][col].height;
-                println!("TOP: {} ({}, {})", forest[row][col].height, row, col);
             }
         }
     }
@@ -54,7 +53,6 @@ pub fn find_visible_trees(input: &str) -> usize {
             if forest[row][col].height > max_height {
                 forest[row][col].visible_bottom = true;
                 max_height = forest[row][col].height;
-                println!("BOTTOM: {} ({}, {})", forest[row][col].height, row, col);
             }
         }
     }
@@ -66,7 +64,6 @@ pub fn find_visible_trees(input: &str) -> usize {
             if forest[row][col].height > max_height {
                 forest[row][col].visible_left = true;
                 max_height = forest[row][col].height;
-                println!("LEFT: {} ({}, {})", forest[row][col].height, row, col);
             }
         }
     }
@@ -78,7 +75,6 @@ pub fn find_visible_trees(input: &str) -> usize {
             if forest[row][col].height > max_height {
                 forest[row][col].visible_right = true;
                 max_height = forest[row][col].height;
-                println!("RIGHT: {} ({}, {})", forest[row][col].height, row, col);
             }
         }
     }
@@ -90,7 +86,7 @@ pub fn find_visible_trees(input: &str) -> usize {
         .count()
 }
 
-fn scenic_score(forest: &Vec<Vec<Tree>>, i: usize, j: usize, height: i64) -> usize {
+fn scenic_score(forest: &Vec<Vec<Tree>>, i: usize, j: usize, height: i32) -> usize {
     // Top
     let score_top = (0..i)
         .rev()
@@ -124,17 +120,7 @@ fn scenic_score(forest: &Vec<Vec<Tree>>, i: usize, j: usize, height: i64) -> usi
 pub fn highest_scenic_score(input: &str) -> usize {
     let forest: Vec<Vec<Tree>> = input
         .lines()
-        .map(|line| {
-            line.chars()
-                .map(|c| Tree {
-                    height: i64::from(c.to_digit(10).unwrap()),
-                    visible_top: false,
-                    visible_bottom: false,
-                    visible_left: false,
-                    visible_right: false,
-                })
-                .collect()
-        })
+        .map(|line| line.chars().map(Tree::from_char).collect())
         .collect();
 
     // Highest score
