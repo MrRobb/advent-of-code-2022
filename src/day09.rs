@@ -6,9 +6,11 @@ fn follow(tail: &mut (i32, i32), head: (i32, i32)) {
     let (dx, dy) = (head.0 - tail.0, head.1 - tail.1);
     if dx == 0 && dy.abs() == 2 {
         tail.1 += dy / 2;
-    } else if dx.abs() == 2 && dy == 0 {
+    }
+    else if dx.abs() == 2 && dy == 0 {
         tail.0 += dx / 2;
-    } else if dx.abs() > 1 || dy.abs() > 1 {
+    }
+    else if dx.abs() > 1 || dy.abs() > 1 {
         tail.0 += if dx > 0 { 1 } else { -1 };
         tail.1 += if dy > 0 { 1 } else { -1 };
     }
