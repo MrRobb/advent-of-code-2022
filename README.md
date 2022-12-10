@@ -13,7 +13,7 @@
 | Day 7  | [Problem 7](https://adventofcode.com/2022/day/7)   | [day07.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day07.rs) | 243.91 μs + 243.73 μs | 64            | ✓        |
 | Day 8  | [Problem 8](https://adventofcode.com/2022/day/8)   | [day08.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day08.rs) | 56.995 μs + 294.87 μs | 101           | ✓        |
 | Day 9  | [Problem 9](https://adventofcode.com/2022/day/9)   | [day09.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day09.rs) | 373.37 μs + 637.31 μs | 55            | ✓        |
-| Day 10 | [Problem 10](https://adventofcode.com/2022/day/10) | [day10.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day10.rs) | 3.1713 μs + 6.6354 μs | 76            | ✓        |
+| Day 10 | [Problem 10](https://adventofcode.com/2022/day/10) | [day10.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day10.rs) | 3.1713 μs + 6.6354 μs | 77            | ✓        |
 
 > The benchmarks are measured (non-scientifically) with [cargo-criterion](https://github.com/bheisler/cargo-criterion) on a AMD Ryzen 5 3600 Desktop. More in the [benchmarks](#benchmarks) section.
 > The lines of code are measured using [ghloc](https://github.com/MrRobb/ghloc-rs), excluding comments and empty lines.
