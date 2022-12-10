@@ -37,9 +37,13 @@ fn bench1(c: &mut Criterion) {
     // c.bench_function("Day 8 | Part 1", |b| b.iter(|| day08::find_visible_trees(&input08)));
     // c.bench_function("Day 8 | Part 2", |b| b.iter(|| day08::highest_scenic_score(&input08)));
 
-    let input09 = read_to_string("input/day09.txt").expect("Input file not found");
-    c.bench_function("Day 9 | Part 1", |b| b.iter(|| day09::part1(&input09)));
-    c.bench_function("Day 9 | Part 2", |b| b.iter(|| day09::part2(&input09)));
+    // let input09 = read_to_string("input/day09.txt").expect("Input file not found");
+    // c.bench_function("Day 9 | Part 1", |b| b.iter(|| day09::part1(&input09)));
+    // c.bench_function("Day 9 | Part 2", |b| b.iter(|| day09::part2(&input09)));
+
+    let input10 = read_to_string("input/day10.txt").expect("Input file not found");
+    c.bench_function("Day 10 | Part 1", |b| b.iter(|| day10::find_marker(&input10)));
+    c.bench_function("Day 10 | Part 2", |b| b.iter(|| day10::draw_pixels(&input10)));
 }
 
 criterion_group!(benches, bench1);
