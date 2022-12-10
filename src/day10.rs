@@ -47,7 +47,8 @@ pub fn get_signal_strength(input: &str) -> i64 {
 const fn draw(col: usize, x: i64) -> char {
     if (x - 1) <= col as i64 && col as i64 <= (x + 1) {
         '█'
-    } else {
+    }
+    else {
         ' '
     }
 }
