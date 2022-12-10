@@ -42,7 +42,7 @@ fn bench1(c: &mut Criterion) {
     // c.bench_function("Day 9 | Part 2", |b| b.iter(|| day09::part2(&input09)));
 
     let input10 = read_to_string("input/day10.txt").expect("Input file not found");
-    c.bench_function("Day 10 | Part 1", |b| b.iter(|| day10::find_marker(&input10)));
+    c.bench_function("Day 10 | Part 1", |b| b.iter(|| day10::get_signal_strength(&input10)));
     c.bench_function("Day 10 | Part 2", |b| b.iter(|| day10::draw_pixels(&input10)));
 }
 

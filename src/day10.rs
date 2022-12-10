@@ -18,7 +18,7 @@ impl From<&str> for Op {
     }
 }
 
-pub fn find_marker(input: &str) -> i64 {
+pub fn get_signal_strength(input: &str) -> i64 {
     let mut x = 1;
     let mut cycles = 1;
     let mut signal_strength = 0;
@@ -77,7 +77,7 @@ pub fn draw_pixels(input: &str) -> String {
 pub fn main() {
     let input = std::fs::read_to_string("input/day10.txt").expect("Input file not found");
     let now = std::time::Instant::now();
-    println!("PART 1 = {}", find_marker(&input));
+    println!("PART 1 = {}", get_signal_strength(&input));
     println!("PART 2 = \n{}", draw_pixels(&input));
     println!("Execution time: {:?}", now.elapsed());
 }
