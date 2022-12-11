@@ -83,7 +83,8 @@ fn play_rounds(mut monkeys: Vec<Monkey>, rounds: usize, gets_bored: impl Fn(Worr
                 if new_worry_level % monkeys[imonkey].divisible_by == 0 {
                     let success_monkey = monkeys[imonkey].success;
                     monkeys[success_monkey].items.push(new_worry_level);
-                } else {
+                }
+                else {
                     let failure_monkey = monkeys[imonkey].failure;
                     monkeys[failure_monkey].items.push(new_worry_level);
                 }
