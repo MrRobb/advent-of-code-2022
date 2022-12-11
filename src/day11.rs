@@ -8,12 +8,10 @@
 use itertools::Itertools;
 use num::Integer;
 
-type WorryLevel = u64;
-
 struct Monkey {
-    items: Vec<WorryLevel>,
-    operation: Box<dyn Fn(WorryLevel) -> WorryLevel>,
-    divisible_by: WorryLevel,
+    items: Vec<u64>,
+    operation: Box<dyn Fn(u64) -> u64>,
+    divisible_by: u64,
     success: usize,
     failure: usize,
 }
@@ -35,12 +33,12 @@ impl From<&str> for Monkey {
 
         // Operation
         let operation = lines.next().unwrap().rsplit(' ').take(2).collect_vec();
-        let operation: Box<dyn Fn(WorryLevel) -> WorryLevel> = match operation.as_slice() {
-            [n, "+"] => match n.parse::<WorryLevel>() {
+        let operation: Box<dyn Fn(u64) -> u64> = match operation.as_slice() {
+            [n, "+"] => match n.parse::<u64>() {
                 Ok(n) => Box::new(move |old| old + n),
                 Err(_) => Box::new(move |old| old + old),
             },
-            [n, "*"] => match n.parse::<WorryLevel>() {
+            [n, "*"] => match n.parse::<u64>() {
                 Ok(n) => Box::new(move |old| old * n),
                 Err(_) => Box::new(move |old| old * old),
             },
@@ -62,7 +60,7 @@ impl From<&str> for Monkey {
     }
 }
 
-fn play_rounds(mut monkeys: Vec<Monkey>, rounds: usize, gets_bored: impl Fn(WorryLevel) -> WorryLevel) -> usize {
+fn play_rounds(mut monkeys: Vec<Monkey>, rounds: usize, gets_bored: impl Fn(u64) -> u64) -> usize {
     let mut monkey_business = vec![0; monkeys.len()];
 
     for _ in 0..rounds {
