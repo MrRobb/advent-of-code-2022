@@ -45,9 +45,13 @@ fn bench1(c: &mut Criterion) {
     // c.bench_function("Day 10 | Part 1", |b| b.iter(|| day10::get_signal_strength(&input10)));
     // c.bench_function("Day 10 | Part 2", |b| b.iter(|| day10::draw_pixels(&input10)));
 
-    let input11 = read_to_string("input/day11.txt").expect("Input file not found");
-    c.bench_function("Day 11 | Part 1", |b| b.iter(|| day11::keep_away(&input11)));
-    c.bench_function("Day 11 | Part 2", |b| b.iter(|| day11::keep_away_lcm(&input11)));
+    // let input11 = read_to_string("input/day11.txt").expect("Input file not found");
+    // c.bench_function("Day 11 | Part 1", |b| b.iter(|| day11::keep_away(&input11)));
+    // c.bench_function("Day 11 | Part 2", |b| b.iter(|| day11::keep_away_lcm(&input11)));
+
+    let input12 = read_to_string("input/day12.txt").expect("Input file not found");
+    c.bench_function("Day 12 | Part 1", |b| b.iter(|| day12::min_path_to_s(&input12)));
+    c.bench_function("Day 12 | Part 2", |b| b.iter(|| day12::min_path_to_a(&input12)));
 }
 
 criterion_group!(benches, bench1);
