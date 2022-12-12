@@ -35,7 +35,7 @@ fn neighbors(idx: &(usize, usize), heightmap: &[Vec<char>]) -> Vec<((usize, usiz
     neighbors
 }
 
-pub fn min_path_to_s(input: &str) -> usize {
+fn min_path(input: &str, goal: impl Fn(&[Vec<char>], &(usize, usize)) -> bool) -> usize {
     // Build map
     let mut start = (0, 0);
     let heightmap: Vec<Vec<char>> = input
@@ -58,41 +58,19 @@ pub fn min_path_to_s(input: &str) -> usize {
     let result = dijkstra(
         &start,
         |node| neighbors(node, &heightmap),
-        |&(i, j)| heightmap[i][j] == 'S',
+        |node| goal(&heightmap, node),
     );
 
     // Get cost result
     result.unwrap().0.len() - 1
 }
 
+pub fn min_path_to_s(input: &str) -> usize {
+    min_path(input, |heightmap, &(i, j)| heightmap[i][j] == 'S')
+}
+
 pub fn min_path_to_a(input: &str) -> usize {
-    // Build map
-    let mut start = (0, 0);
-    let heightmap: Vec<Vec<char>> = input
-        .lines()
-        .enumerate()
-        .map(|(i, line)| {
-            line.chars()
-                .enumerate()
-                .map(|(j, c)| {
-                    if c == 'E' {
-                        start = (i, j);
-                    }
-                    c
-                })
-                .collect()
-        })
-        .collect();
-
-    // Apply Dijkstra E -> .. -> a
-    let result = dijkstra(
-        &start,
-        |node| neighbors(node, &heightmap),
-        |&(i, j)| height(heightmap[i][j]) == 'a' as i64,
-    );
-
-    // Get cost result
-    result.unwrap().0.len() - 1
+    min_path(input, |heightmap, &(i, j)| height(heightmap[i][j]) == 'a' as i64)
 }
 
 pub fn main() {
