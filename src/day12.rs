@@ -1,6 +1,6 @@
 #![allow(clippy::must_use_candidate, clippy::missing_panics_doc)]
 
-use pathfinding::prelude::{build_path, dijkstra, dijkstra_all};
+use pathfinding::prelude::dijkstra;
 
 const fn height(c: char) -> i64 {
     match c {
