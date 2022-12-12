@@ -54,7 +54,7 @@ fn min_path(input: &str, goal: impl Fn(&[Vec<char>], &(usize, usize)) -> bool) -
         })
         .collect();
 
-    // Apply Dijkstra E -> .. -> S
+    // Apply Dijkstra
     let result = dijkstra(
         &start,
         |node| neighbors(node, &heightmap),
