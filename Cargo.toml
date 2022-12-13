@@ -9,7 +9,10 @@ default-run = "advent-of-code-2022"
 [dependencies]
 itertools = "0.10"
 num = "0.4.0"
+parse-display = "0.7.0"
 pathfinding = "4.0.0"
+serde = { version = "1.0.150", features = ["derive"] }
+serde_json = "1.0.89"
 
 [dev-dependencies]
 criterion = "0.4"
@@ -70,3 +73,7 @@ path = "src/day11.rs"
 [[bin]]
 name = "day12"
 path = "src/day12.rs"
+
+[[bin]]
+name = "day13"
+path = "src/day13.rs"
