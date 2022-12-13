@@ -57,10 +57,10 @@ impl PartialOrd for Value {
 impl Ord for Value {
     fn cmp(&self, other: &Self) -> Ordering {
         match (self, other) {
-            (Self::Int(a), Self::Int(b)) => a.cmp(&b),
-            (Self::List(a), Self::List(b)) => a.cmp(&b),
+            (Self::Int(a), Self::Int(b)) => a.cmp(b),
+            (Self::List(a), Self::List(b)) => a.cmp(b),
             (Self::List(children), Self::Int(b)) => children.cmp(&vec![Self::Int(*b)]),
-            (Self::Int(a), Self::List(children)) => vec![Self::Int(*a)].cmp(&children),
+            (Self::Int(a), Self::List(children)) => vec![Self::Int(*a)].cmp(children),
         }
     }
 }
