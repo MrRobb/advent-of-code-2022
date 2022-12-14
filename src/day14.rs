@@ -68,6 +68,7 @@ fn print_map(map: &Map) {
     }
 }
 
+/// Idea: only update the added cells, not the whole map
 fn update_map(map: &mut Map, sand_pouring: (usize, usize)) {
     map[sand_pouring.0][sand_pouring.1] = Cell::Sand;
     for i in 0..map.len() {
