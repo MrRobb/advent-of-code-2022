@@ -35,8 +35,7 @@ impl Value {
 
             children.push(Self::parse(&s[offset..]));
             Self::List(children)
-        }
-        else {
+        } else {
             Self::Int(
                 s.chars()
                     .take_while(char::is_ascii_digit)
@@ -66,15 +65,14 @@ impl Ord for Value {
 }
 
 pub fn how_many_sorted(input: &str) -> usize {
-    let mut total = 0;
-    for (i, group) in input.split("\n\n").enumerate() {
-        for (a, b) in group.lines().tuples() {
-            if Value::parse(a) < Value::parse(b) {
-                total += i + 1;
-            }
-        }
-    }
-    total
+    input
+        .split("\n\n")
+        .enumerate()
+        .flat_map(|(i, s)| s.lines().map(move |s| (i, Value::parse(s))))
+        .tuples()
+        .filter(|((_, a), (_, b))| a < b)
+        .map(|((i, _), _)| i + 1)
+        .sum()
 }
 
 pub fn sort_all(input: &str) -> usize {
