@@ -35,7 +35,8 @@ impl Value {
 
             children.push(Self::parse(&s[offset..]));
             Self::List(children)
-        } else {
+        }
+        else {
             Self::Int(
                 s.chars()
                     .take_while(char::is_ascii_digit)
