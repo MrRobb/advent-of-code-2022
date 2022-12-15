@@ -68,31 +68,29 @@ fn print_map(map: &Map) {
     }
 }
 
-/// Idea: only update the added cells, not the whole map
 fn update_map(map: &mut Map, sand_pouring: (usize, usize)) {
-    map[sand_pouring.0][sand_pouring.1] = Cell::Sand;
-    for i in 0..map.len() {
-        for j in 0..map[i].len() {
-            let cell = &map[i][j];
-            if *cell == Cell::Sand {
-                // if it's sand, try to go down
-                if i + 1 < map.len() && map[i + 1][j] == Cell::Air {
-                    map[i][j] = Cell::Air;
-                    map[i + 1][j] = Cell::Sand;
-                }
-                // if it's sand and there's no down, try to go left
-                else if j > 0 && i + 1 < map.len() && map[i + 1][j - 1] == Cell::Air {
-                    map[i][j] = Cell::Air;
-                    map[i + 1][j - 1] = Cell::Sand;
-                }
-                // if it's sand and there's no down and no left, try to go right
-                else if j + 1 < map[i].len() && i + 1 < map.len() && map[i + 1][j + 1] == Cell::Air {
-                    map[i][j] = Cell::Air;
-                    map[i + 1][j + 1] = Cell::Sand;
-                }
-            }
+    let mut grain = (sand_pouring.0, sand_pouring.1);
+    loop {
+        let i = grain.0;
+        let j = grain.1;
+
+        // try to go down
+        if i + 1 < map.len() && map[i + 1][j] == Cell::Air {
+            grain = (i + 1, j);
+        }
+        // if there's no down, try to go left
+        else if j > 0 && i + 1 < map.len() && map[i + 1][j - 1] == Cell::Air {
+            grain = (i + 1, j - 1);
+        }
+        // if there's no down and no left, try to go right
+        else if j + 1 < map[i].len() && i + 1 < map.len() && map[i + 1][j + 1] == Cell::Air {
+            grain = (i + 1, j + 1);
+        }
+        else {
+            break;
         }
     }
+    map[grain.0][grain.1] = Cell::Sand;
 }
 
 fn produce_sand(input: &str, end_condition: impl Fn(&Map) -> bool) -> usize {
@@ -127,7 +125,7 @@ fn has_pyramid(map: &Map) -> bool {
 }
 
 pub fn reach_abbyss(input: &str) -> usize {
-    produce_sand(input, has_abyss_flow)
+    produce_sand(input, has_abyss_flow) - 1
 }
 
 pub fn reach_pyramid(input: &str) -> usize {
