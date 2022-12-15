@@ -17,7 +17,7 @@
 | Day 11 | [Problem 11](https://adventofcode.com/2022/day/11) | [day11.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day11.rs) | 13.747 μs + 8.0738 ms | 97            | ✓        |
 | Day 12 | [Problem 12](https://adventofcode.com/2022/day/12) | [day12.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day12.rs) | 433.01 μs + 395.58 μs | 69            | ✓        |
 | Day 13 | [Problem 13](https://adventofcode.com/2022/day/13) | [day13.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day13.rs) | 521.14 μs + 712.65 μs | 87            | ✓        |
-| Day 14 | [Problem 14](https://adventofcode.com/2022/day/14) | [day14.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day14.rs) | 19.211 ms + 1.2536 s  | 116           | ✓        |
+| Day 14 | [Problem 14](https://adventofcode.com/2022/day/14) | [day14.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day14.rs) | 221.21 µs + 7.4928 ms | 114           | ✓        |
 | Day 15 | [Problem 15](https://adventofcode.com/2022/day/15) | [day15.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day15.rs) | 12.688 ms + 107.37 ms | 128           | ✓        |
 
 > The benchmarks are measured (non-scientifically) with [cargo-criterion](https://github.com/bheisler/cargo-criterion) on a AMD Ryzen 5 3600 Desktop. More in the [benchmarks](#benchmarks) section.
