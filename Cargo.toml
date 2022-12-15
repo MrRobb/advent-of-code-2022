@@ -7,10 +7,14 @@ rust-version = "1.56"
 default-run = "advent-of-code-2022"
 
 [dependencies]
+indicatif = "0.17.2"
 itertools = "0.10"
 num = "0.4.0"
 parse-display = "0.7.0"
 pathfinding = "4.0.0"
+proptest = "1.0.0"
+rstest = "0.16.0"
+scan_fmt = "0.2.6"
 serde = { version = "1.0.150", features = ["derive"] }
 serde_json = "1.0.89"
 
@@ -81,3 +85,7 @@ path = "src/day13.rs"
 [[bin]]
 name = "day14"
 path = "src/day14.rs"
+
+[[bin]]
+name = "day15"
+path = "src/day15.rs"
