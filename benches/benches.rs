@@ -57,9 +57,13 @@ fn bench1(c: &mut Criterion) {
     // c.bench_function("Day 13 | Part 1", |b| b.iter(|| day13::how_many_sorted(&input13)));
     // c.bench_function("Day 13 | Part 2", |b| b.iter(|| day13::sort_all(&input13)));
 
-    let input14 = read_to_string("input/day14.txt").expect("Input file not found");
-    c.bench_function("Day 14 | Part 1", |b| b.iter(|| day14::reach_abbyss(&input14)));
-    c.bench_function("Day 14 | Part 2", |b| b.iter(|| day14::reach_pyramid(&input14)));
+    // let input14 = read_to_string("input/day14.txt").expect("Input file not found");
+    // c.bench_function("Day 14 | Part 1", |b| b.iter(|| day14::reach_abbyss(&input14)));
+    // c.bench_function("Day 14 | Part 2", |b| b.iter(|| day14::reach_pyramid(&input14)));
+
+    let input15 = read_to_string("input/day15.txt").expect("Input file not found");
+    c.bench_function("Day 15 | Part 1", |b| b.iter(|| day15::no_beacon_at_2m(&input15)));
+    c.bench_function("Day 15 | Part 2", |b| b.iter(|| day15::find_distress_beacon(&input15)));
 }
 
 criterion_group!(benches, bench1);

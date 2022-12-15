@@ -1,6 +1,7 @@
 #![allow(clippy::must_use_candidate, clippy::missing_panics_doc)]
 
 use itertools::Itertools;
+use rayon::prelude::{IntoParallelIterator, IntoParallelRefIterator, ParallelIterator};
 use scan_fmt::scan_fmt;
 
 #[derive(Copy, Clone)]
@@ -80,10 +81,11 @@ fn build_map(input: &str) -> Map {
     Map { sensors, min, max }
 }
 
-fn no_beacon_at_2m(input: &str) -> usize {
+pub fn no_beacon_at_2m(input: &str) -> usize {
     const ROW: i64 = 2_000_000;
     let map = build_map(input);
     (map.min..map.max)
+        .into_par_iter()
         .map(|x| diamond_to_cartesian((x, ROW)))
         .filter(|&position| {
             map.sensors
@@ -93,33 +95,33 @@ fn no_beacon_at_2m(input: &str) -> usize {
         .count()
 }
 
-fn find_distress_beacon(input: &str) -> i64 {
+pub fn find_distress_beacon(input: &str) -> i64 {
     let map = build_map(input);
+    map.sensors
+        .par_iter()
+        .find_map_any(|sensor| {
+            // Build borders of the square
+            let left = (sensor.left.1..=sensor.bottom.1).map(move |y| (sensor.left.0 - 1, y));
+            let top = (sensor.left.0..=sensor.top.0).map(move |x| (x, sensor.top.1 - 1));
+            let right = (sensor.top.1..=sensor.right.1).map(move |y| (sensor.right.1 + 1, y));
+            let bottom = (sensor.bottom.0..=sensor.right.0).map(move |x| (x, sensor.bottom.0 + 1));
 
-    let mut distress_signal = (0, 0);
-
-    for sensor in &map.sensors {
-        let left = (sensor.left.1..=sensor.bottom.1).map(move |y| (sensor.left.0 - 1, y));
-        let top = (sensor.left.0..=sensor.top.0).map(move |x| (x, sensor.top.1 - 1));
-        let right = (sensor.top.1..=sensor.right.1).map(move |y| (sensor.right.1 + 1, y));
-        let bottom = (sensor.bottom.0..=sensor.right.0).map(move |x| (x, sensor.bottom.0 + 1));
-
-        // Iter over all the points in the square
-        let possible_distress_signal = left
-            .chain(right)
-            .chain(top)
-            .chain(bottom)
-            .filter(|&point| {
-                let position = cartesian_to_diamond(point);
-                position.0 >= 0 && position.0 <= 4_000_000 && position.1 >= 0 && position.1 <= 4_000_000
-            })
-            .find(|point| map.sensors.iter().all(|s| point != &s.beacon && !is_inside(point, s)));
-        if let Some(point) = possible_distress_signal {
-            distress_signal = cartesian_to_diamond(point);
-        }
-    }
-
-    distress_signal.0 * 4_000_000 + distress_signal.1
+            // Iterate over all borders
+            left.chain(right)
+                .chain(top)
+                .chain(bottom)
+                .filter(|&point| {
+                    let position = cartesian_to_diamond(point);
+                    position.0 >= 0 && position.0 <= 4_000_000 && position.1 >= 0 && position.1 <= 4_000_000
+                })
+                .find(|point| map.sensors.iter().all(|s| point != &s.beacon && !is_inside(point, s)))
+        })
+        .map(|point| {
+            // Convert to diamond coordinates and compute the distress signal
+            let point = cartesian_to_diamond(point);
+            point.0 * 4_000_000 + point.1
+        })
+        .unwrap()
 }
 
 pub fn main() {
