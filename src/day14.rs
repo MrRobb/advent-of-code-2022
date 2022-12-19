@@ -28,11 +28,11 @@ fn build_map(lines: Vec<Vec<(usize, usize)>>) -> ((usize, usize), Map) {
     let (min_x, max_x) = (SAND_POURING.0 - (height - 1), SAND_POURING.0 + (height - 1));
 
     // Build map
-    let mut map = vec![vec![Cell::Air; (max_x - min_x + 1) as usize]; (max_y - min_y + 1) as usize];
+    let mut map = vec![vec![Cell::Air; max_x - min_x + 1]; max_y - min_y + 1];
 
     // Add ground
     for x in min_x..=max_x {
-        map[(max_y - min_y) as usize][(x - min_x) as usize] = Cell::Rock;
+        map[max_y - min_y][x - min_x] = Cell::Rock;
     }
 
     // Add rocks
@@ -40,12 +40,12 @@ fn build_map(lines: Vec<Vec<(usize, usize)>>) -> ((usize, usize), Map) {
         for ((prev_x, prev_y), (end_x, end_y)) in component.into_iter().tuple_windows() {
             if prev_x == end_x {
                 for y in prev_y.min(end_y)..=end_y.max(prev_y) {
-                    map[(y - min_y) as usize][(prev_x - min_x) as usize] = Cell::Rock;
+                    map[y - min_y][prev_x - min_x] = Cell::Rock;
                 }
             }
             else {
                 for x in prev_x.min(end_x)..=end_x.max(prev_x) {
-                    map[(prev_y - min_y) as usize][(x - min_x) as usize] = Cell::Rock;
+                    map[prev_y - min_y][x - min_x] = Cell::Rock;
                 }
             }
         }
