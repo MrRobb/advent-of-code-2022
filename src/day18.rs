@@ -15,7 +15,7 @@ const fn is_next(point: &(i64, i64, i64), next: &(i64, i64, i64)) -> bool {
         || x == nx - 1 && y == ny && z == nz
 }
 
-fn surface_area(input: &str) -> usize {
+pub fn surface_area(input: &str) -> usize {
     let points = input
         .lines()
         .map(|line| {
@@ -53,7 +53,7 @@ const fn sides(point: &(i64, i64, i64)) -> [(i64, i64, i64); 6] {
     ]
 }
 
-fn exterior_surface_area(input: &str) -> usize {
+pub fn exterior_surface_area(input: &str) -> usize {
     let points = input
         .lines()
         .map(|line| {

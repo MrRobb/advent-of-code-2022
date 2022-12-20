@@ -186,7 +186,7 @@ fn max_geodes(blueprint: Blueprint, minutes: usize) -> usize {
     max_geodes
 }
 
-fn quality_levels(input: &str) -> usize {
+pub fn quality_levels(input: &str) -> usize {
     input.lines()
         .par_bridge()
         .map(Blueprint::parse)
@@ -197,7 +197,7 @@ fn quality_levels(input: &str) -> usize {
         .sum()
 }
 
-fn open_geodes(input: &str) -> usize {
+pub fn open_geodes(input: &str) -> usize {
     input
         .lines()
         .map(Blueprint::parse)
