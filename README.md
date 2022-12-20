@@ -22,7 +22,7 @@
 | Day 16 | [Problem 16](https://adventofcode.com/2022/day/16) | [day16.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day16.rs) |                       |               | ✗        |
 | Day 17 | [Problem 17](https://adventofcode.com/2022/day/17) | [day17.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day17.rs) |                       |               | ✗        |
 | Day 18 | [Problem 18](https://adventofcode.com/2022/day/18) | [day18.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day18.rs) |                       | 95            | ✓        |
-| Day 19 | [Problem 19](https://adventofcode.com/2022/day/19) | [day19.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day19.rs) |                       |               | ✗        |
+| Day 19 | [Problem 19](https://adventofcode.com/2022/day/19) | [day19.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day19.rs) |                       | 179           | ✓        |
 | Day 20 | [Problem 20](https://adventofcode.com/2022/day/20) | [day20.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day20.rs) |                       | 45            | ✓        |
 
 > The benchmarks are measured (non-scientifically) with [cargo-criterion](https://github.com/bheisler/cargo-criterion) on a AMD Ryzen 5 3600 Desktop. More in the [benchmarks](#benchmarks) section.
