@@ -7,6 +7,10 @@ rust-version = "1.56"
 default-run = "advent-of-code-2022"
 
 [dependencies]
+cached = "0.41.0"
+enum-iterator = "1.2.0"
+hashbrown = { version = "0.13.1", features = ["rayon"] }
+indicatif = { version = "0.17.2", features = ["rayon"] }
 itertools = "0.10"
 num = "0.4.0"
 pathfinding = "4.0.0"
@@ -89,6 +93,10 @@ path = "src/day15.rs"
 [[bin]]
 name = "day18"
 path = "src/day18.rs"
+
+[[bin]]
+name = "day19"
+path = "src/day19.rs"
 
 [[bin]]
 name = "day20"
