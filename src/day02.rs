@@ -1,4 +1,4 @@
-#![allow(clippy::must_use_candidate, clippy::missing_panics_doc)]
+#![allow(clippy::must_use_candidate, clippy::missing_panics_doc, clippy::upper_case_acronyms)]
 
 #[derive(PartialEq, Clone, Copy, Debug)]
 enum RPS {
