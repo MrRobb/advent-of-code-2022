@@ -21,9 +21,9 @@
 | Day 15 | [Problem 15](https://adventofcode.com/2022/day/15) | [day15.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day15.rs) | 12.688 ms + 107.37 ms | 128           | ✓        |
 | Day 16 | [Problem 16](https://adventofcode.com/2022/day/16) | [day16.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day16.rs) |                       |               | ✗        |
 | Day 17 | [Problem 17](https://adventofcode.com/2022/day/17) | [day17.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day17.rs) |                       |               | ✗        |
-| Day 18 | [Problem 18](https://adventofcode.com/2022/day/18) | [day18.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day18.rs) |                       | 95            | ✓        |
-| Day 19 | [Problem 19](https://adventofcode.com/2022/day/19) | [day19.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day19.rs) |                       | 179           | ✓        |
-| Day 20 | [Problem 20](https://adventofcode.com/2022/day/20) | [day20.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day20.rs) |                       | 45            | ✓        |
+| Day 18 | [Problem 18](https://adventofcode.com/2022/day/18) | [day18.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day18.rs) | 24.405 ms + 69.568 ms | 95            | ✓        |
+| Day 19 | [Problem 19](https://adventofcode.com/2022/day/19) | [day19.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day19.rs) | 259.98 ms + 457.76 ms | 195           | ✓        |
+| Day 20 | [Problem 20](https://adventofcode.com/2022/day/20) | [day20.rs](https://github.com/MrRobb/advent-of-code-2022/blob/main/src/day20.rs) | 4.3224 ms + 50.078 ms | 45            | ✓        |
 
 > The benchmarks are measured (non-scientifically) with [cargo-criterion](https://github.com/bheisler/cargo-criterion) on a AMD Ryzen 5 3600 Desktop. More in the [benchmarks](#benchmarks) section.
 > The lines of code are measured using [ghloc](https://github.com/MrRobb/ghloc-rs), excluding comments and empty lines.
