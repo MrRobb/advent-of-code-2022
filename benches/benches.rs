@@ -61,9 +61,21 @@ fn bench1(c: &mut Criterion) {
     // c.bench_function("Day 14 | Part 1", |b| b.iter(|| day14::reach_abbyss(&input14)));
     // c.bench_function("Day 14 | Part 2", |b| b.iter(|| day14::reach_pyramid(&input14)));
 
-    let input15 = read_to_string("input/day15.txt").expect("Input file not found");
-    c.bench_function("Day 15 | Part 1", |b| b.iter(|| day15::no_beacon_at_2m(&input15)));
-    c.bench_function("Day 15 | Part 2", |b| b.iter(|| day15::find_distress_beacon(&input15)));
+    // let input15 = read_to_string("input/day15.txt").expect("Input file not found");
+    // c.bench_function("Day 15 | Part 1", |b| b.iter(|| day15::no_beacon_at_2m(&input15)));
+    // c.bench_function("Day 15 | Part 2", |b| b.iter(|| day15::find_distress_beacon(&input15)));
+
+    // let input18 = read_to_string("input/day18.txt").expect("Input file not found");
+    // c.bench_function("Day 18 | Part 1", |b| b.iter(|| day18::surface_area(&input18)));
+    // c.bench_function("Day 18 | Part 2", |b| b.iter(|| day18::exterior_surface_area(&input18)));
+
+    let input19 = read_to_string("input/day19.txt").expect("Input file not found");
+    c.bench_function("Day 19 | Part 1", |b| b.iter(|| day19::quality_levels(&input19)));
+    c.bench_function("Day 19 | Part 2", |b| b.iter(|| day19::open_geodes(&input19)));
+
+    // let input20 = read_to_string("input/day20.txt").expect("Input file not found");
+    // c.bench_function("Day 20 | Part 1", |b| b.iter(|| day20::mix(&input20)));
+    // c.bench_function("Day 20 | Part 2", |b| b.iter(|| day20::mix_with_key(&input20)));
 }
 
 criterion_group!(benches, bench1);
