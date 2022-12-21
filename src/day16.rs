@@ -129,9 +129,8 @@ fn build_tunnels(input: &str) -> (BTreeMap<String, Vec<String>>, BTreeMap<String
     (tunnels, rates)
 }
 
-pub fn part1(input: &str) -> usize {
+pub fn explore_tunnels(input: &str) -> usize {
     let (tunnels, rates) = build_tunnels(input);
-    // step(30, "AA".to_string(), tunnels, rates, BTreeSet::new())
 
     // Distances
     let mut distances = BTreeMap::new();
@@ -167,7 +166,7 @@ pub fn part1(input: &str) -> usize {
     )
 }
 
-pub fn part2(input: &str) -> usize {
+pub fn explore_with_elephant(input: &str) -> usize {
     let (tunnels, rates) = build_tunnels(input);
 
     // Distances
@@ -216,9 +215,11 @@ pub fn part2(input: &str) -> usize {
                 .fold_while(0, |max_pressure, elephant_path| {
                     if human_path.1 + elephant_path.1 <= max_pressure {
                         FoldWhile::Done(max_pressure)
-                    } else if human_path.0.is_disjoint(&elephant_path.0) {
+                    }
+                    else if human_path.0.is_disjoint(&elephant_path.0) {
                         FoldWhile::Continue(max_pressure.max(human_path.1 + elephant_path.1))
-                    } else {
+                    }
+                    else {
                         FoldWhile::Continue(max_pressure)
                     }
                 })
@@ -231,7 +232,7 @@ pub fn part2(input: &str) -> usize {
 pub fn main() {
     let input = std::fs::read_to_string("input/day16.txt").expect("Input file not found");
     let now = std::time::Instant::now();
-    println!("PART 1 = {}", part1(&input));
-    println!("PART 2 = {}", part2(&input));
+    println!("PART 1 = {}", explore_tunnels(&input));
+    println!("PART 2 = {}", explore_with_elephant(&input));
     println!("Execution time: {:?}", now.elapsed());
 }
