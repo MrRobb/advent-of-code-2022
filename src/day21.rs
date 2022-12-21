@@ -78,7 +78,7 @@ pub fn build_equation(input: &str) -> usize {
         },
         Operation::Number(_) => unreachable!(),
     };
-    LinearSolver.process(&equation).unwrap().as_f64().unwrap() as usize
+    LinearSolver.process(&equation).unwrap().as_f64().unwrap().round() as usize
 }
 
 pub fn main() {
