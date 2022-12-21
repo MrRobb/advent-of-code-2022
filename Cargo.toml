@@ -13,10 +13,12 @@ hashbrown = { version = "0.13.1", features = ["rayon"] }
 indicatif = { version = "0.17.2", features = ["rayon"] }
 itertools = "0.10"
 num = "0.4.0"
+parse-display = "0.8.0"
 pathfinding = "4.0.0"
 proptest = "1.0.0"
 rayon = "1.6.1"
 scan_fmt = "0.2.6"
+xxcalc = "0.2.1"
 
 [dev-dependencies]
 criterion = "0.4"
@@ -100,3 +102,7 @@ path = "src/day19.rs"
 [[bin]]
 name = "day20"
 path = "src/day20.rs"
+
+[[bin]]
+name = "day21"
+path = "src/day21.rs"
