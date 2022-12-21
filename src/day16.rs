@@ -53,7 +53,7 @@ fn bfs_greedy(
     let mut q = VecDeque::new();
     q.push_back(state);
 
-    let mut best_at_minute = vec![0; initial_minutes as usize + 1];
+    let mut best_at_minute = vec![0; initial_minutes + 1];
     let mut max_pressure = 0;
 
     while let Some(state) = q.pop_front() {
