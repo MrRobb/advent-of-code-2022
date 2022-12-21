@@ -12,8 +12,7 @@ use std::sync::Arc;
 
 use enum_iterator::Sequence;
 use hashbrown::HashSet;
-use indicatif::{ParallelProgressIterator, ProgressIterator};
-use rayon::prelude::*;
+use rayon::prelude::{ParallelBridge, ParallelIterator};
 use scan_fmt::scan_fmt;
 
 #[derive(Sequence, Clone, Copy)]
@@ -40,8 +39,8 @@ impl<T> IndexMut<Material> for [T; 4] {
 
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 struct Blueprint {
-    id: usize,
-    costs: [[usize; 4]; 4],
+    id: u16,
+    costs: [[u16; 4]; 4],
 }
 
 impl Blueprint {
@@ -58,13 +57,13 @@ impl Blueprint {
             input,
             "Blueprint {d}: Each ore robot costs {d} ore. Each clay robot costs {d} ore. Each obsidian robot costs \
              {d} ore and {d} clay. Each geode robot costs {d} ore and {d} obsidian.",
-            usize,
-            usize,
-            usize,
-            usize,
-            usize,
-            usize,
-            usize
+            u16,
+            u16,
+            u16,
+            u16,
+            u16,
+            u16,
+            u16
         )
         .unwrap();
         Self {
@@ -82,17 +81,24 @@ impl Blueprint {
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
 struct State {
     blueprint: Arc<Blueprint>,
-    minutes: usize,
-    robots: [usize; 4],
-    materials: [usize; 4],
+    minutes: u16,
+    robots: [u16; 4],
+    materials: [u16; 4],
 }
 
 impl State {
     fn can_build(&self, material: Material) -> bool {
-        self.blueprint.costs[material]
-            .iter()
-            .zip(self.materials.iter())
-            .all(|(cost, material)| material >= cost)
+        match material {
+            Material::Ore | Material::Clay => self.blueprint.costs[material][0] <= self.materials[0],
+            Material::Obsidian => {
+                self.blueprint.costs[material][0] <= self.materials[0]
+                    && self.blueprint.costs[material][1] <= self.materials[1]
+            },
+            Material::Geode => {
+                self.blueprint.costs[material][0] <= self.materials[0]
+                    && self.blueprint.costs[material][2] <= self.materials[2]
+            },
+        }
     }
 
     fn needs_robot(&self, robot_material: Material, needed_by: Material) -> bool {
@@ -130,7 +136,7 @@ impl State {
     }
 }
 
-fn max_geodes(blueprint: Blueprint, minutes: usize) -> usize {
+fn max_geodes(blueprint: Blueprint, minutes: u16) -> u16 {
     // Create start node
     let start = State {
         blueprint: Arc::new(blueprint),
@@ -139,30 +145,45 @@ fn max_geodes(blueprint: Blueprint, minutes: usize) -> usize {
         materials: [0, 0, 0, 0],
     };
 
+    let mut best_at_minute = vec![0; minutes as usize + 1];
     let mut visited = HashSet::new();
     let mut queue = VecDeque::from([start]);
 
     let mut max_geodes = 0;
 
     while let Some(state) = queue.pop_front() {
-        // println!("{:?}", (state.materials, state.robots));
+        // If we have reached the end, update max geodes
         if state.minutes == 0 {
-            if state.materials[3] > max_geodes {
-                max_geodes = state.materials[3];
-            }
+            max_geodes = max_geodes.max(state.materials[Material::Geode]);
             continue;
         }
 
+        // If it has already been visited, skip it
         if visited.contains(&(state.materials, state.robots)) {
             continue;
         }
         visited.insert((state.materials, state.robots));
+
+        // If we cannot reach a better state, skip it
+        let idle_score = state.materials[Material::Geode] + state.robots[Material::Geode] * minutes;
+        let best_score = idle_score + (minutes * (minutes - 1) / 2);
+        if best_score <= max_geodes {
+            continue;
+        }
+
+        // If we already have a faster route, skip it
+        if best_at_minute[state.minutes as usize] > state.materials[Material::Geode] {
+            continue;
+        }
+        best_at_minute[state.minutes as usize] =
+            best_at_minute[state.minutes as usize].max(state.materials[Material::Geode]);
 
         let new_state = state.clone().extract_materials().tick();
 
         // If possible, always build geode robots
         if state.can_build(Material::Geode) {
             queue.push_back(new_state.clone().build_robot(Material::Geode));
+            continue;
         }
 
         // If we need more obsidian robots, build obsidian robot
@@ -180,30 +201,29 @@ fn max_geodes(blueprint: Blueprint, minutes: usize) -> usize {
             queue.push_back(new_state.clone().build_robot(Material::Clay));
         }
 
-        queue.push_back(new_state);
+        queue.push_back(new_state.clone());
     }
 
     max_geodes
 }
 
-pub fn quality_levels(input: &str) -> usize {
-    input.lines()
+pub fn quality_levels(input: &str) -> u16 {
+    input
+        .lines()
         .par_bridge()
         .map(Blueprint::parse)
         .map(|b| (b.id, max_geodes(b, 24)))
-        .progress_count(30)
-        // Get quality level
         .map(|(id, max_geodes)| id * max_geodes)
         .sum()
 }
 
-pub fn open_geodes(input: &str) -> usize {
+pub fn open_geodes(input: &str) -> u16 {
     input
         .lines()
         .map(Blueprint::parse)
         .take(3)
+        .par_bridge()
         .map(|b| max_geodes(b, 32))
-        .progress_count(3)
         .product()
 }
 
