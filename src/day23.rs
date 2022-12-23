@@ -6,7 +6,8 @@
     clippy::cast_sign_loss
 )]
 
-use std::{ops::Add, option::Option};
+use std::ops::Add;
+use std::option::Option;
 
 use enum_iterator::{all, cardinality, Sequence};
 use hashbrown::{HashMap, HashSet};
