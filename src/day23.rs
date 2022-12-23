@@ -113,7 +113,7 @@ fn simulate(input: &str, max_rounds: Option<usize>) -> usize {
                 break;
             }
         }
-        // Break if noone moved (Part 2)
+        // Return if noone moved (Part 2)
         else if !someone_moved {
             return round + 1;
         }
