@@ -125,18 +125,18 @@ fn simulate(input: &str, max_rounds: Option<usize>) -> usize {
     (max_x - min_x + 1) as usize * (max_y - min_y + 1) as usize - elves.len()
 }
 
-pub fn part1(input: &str) -> usize {
+pub fn move_elves_10(input: &str) -> usize {
     simulate(input, Some(10))
 }
 
-pub fn part2(input: &str) -> usize {
+pub fn converge_elves(input: &str) -> usize {
     simulate(input, None)
 }
 
 pub fn main() {
     let input = std::fs::read_to_string("input/day23.txt").expect("Input file not found");
     let now = std::time::Instant::now();
-    println!("PART 1 = {}", part1(&input));
-    println!("PART 2 = {}", part2(&input));
+    println!("PART 1 = {}", move_elves_10(&input));
+    println!("PART 2 = {}", converge_elves(&input));
     println!("Execution time: {:?}", now.elapsed());
 }
