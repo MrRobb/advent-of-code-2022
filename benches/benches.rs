@@ -88,6 +88,10 @@ fn bench1(c: &mut Criterion) {
     // let input21 = read_to_string("input/day21.txt").expect("Input file not found");
     // c.bench_function("Day 21 | Part 1", |b| b.iter(|| day21::compute_monkeys(&input21)));
     // c.bench_function("Day 21 | Part 2", |b| b.iter(|| day21::build_equation(&input21)));
+
+    let input23 = read_to_string("input/day23.txt").expect("Input file not found");
+    c.bench_function("Day 23 | Part 1", |b| b.iter(|| day23::part1(&input23)));
+    c.bench_function("Day 23 | Part 2", |b| b.iter(|| day23::part2(&input23)));
 }
 
 criterion_group!(benches, bench1);
