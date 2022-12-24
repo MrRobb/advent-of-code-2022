@@ -1,6 +1,7 @@
 #![allow(clippy::must_use_candidate, clippy::missing_panics_doc)]
 
 use hashbrown::HashSet;
+use rayon::prelude::{IntoParallelRefIterator, ParallelIterator};
 
 #[derive(PartialEq, Eq, Clone, Copy)]
 enum Direction {
@@ -55,28 +56,32 @@ impl Map {
                 Direction::Left => {
                     if position.1 == 1 {
                         *position = (position.0, self.width - 2);
-                    } else {
+                    }
+                    else {
                         *position = (position.0, position.1 - 1);
                     }
                 },
                 Direction::Right => {
                     if position.1 == self.width - 2 {
                         *position = (position.0, 1);
-                    } else {
+                    }
+                    else {
                         *position = (position.0, position.1 + 1);
                     }
                 },
                 Direction::Up => {
                     if position.0 == 1 {
                         *position = (self.height - 2, position.1);
-                    } else {
+                    }
+                    else {
                         *position = (position.0 - 1, position.1);
                     }
                 },
                 Direction::Down => {
                     if position.0 == self.height - 2 {
                         *position = (1, position.1);
-                    } else {
+                    }
+                    else {
                         *position = (position.0 + 1, position.1);
                     }
                 },
@@ -133,7 +138,8 @@ impl Map {
             for j in 0..self.width {
                 if self.walls.contains(&(i, j)) {
                     print!("#");
-                } else if self.blizzards.iter().any(|(_, position)| position == &(i, j)) {
+                }
+                else if self.blizzards.iter().any(|(_, position)| position == &(i, j)) {
                     let direction = self
                         .blizzards
                         .iter()
@@ -146,11 +152,14 @@ impl Map {
                         Direction::Up => print!("^"),
                         Direction::Down => print!("v"),
                     }
-                } else if self.start == (i, j) {
+                }
+                else if self.start == (i, j) {
                     print!("S");
-                } else if self.goal == (i, j) {
+                }
+                else if self.goal == (i, j) {
                     print!("G");
-                } else {
+                }
+                else {
                     print!(".");
                 }
             }
@@ -170,7 +179,7 @@ impl Map {
 
             // Expand possible positions
             possible_positions = possible_positions
-                .iter()
+                .par_iter()
                 .flat_map(|position| self.neighbors(position))
                 .collect();
             minutes += 1;
@@ -180,12 +189,12 @@ impl Map {
     }
 }
 
-pub fn part1(input: &str) -> usize {
+pub fn reach_goal(input: &str) -> usize {
     let mut map = Map::new(input);
     map.minutes_to(map.start, map.goal)
 }
 
-pub fn part2(input: &str) -> usize {
+pub fn reach_gsg(input: &str) -> usize {
     let mut map = Map::new(input);
     map.minutes_to(map.start, map.goal) + map.minutes_to(map.goal, map.start) + map.minutes_to(map.start, map.goal)
 }
@@ -193,7 +202,7 @@ pub fn part2(input: &str) -> usize {
 pub fn main() {
     let input = std::fs::read_to_string("input/day24.txt").expect("Input file not found");
     let now = std::time::Instant::now();
-    println!("PART 1 = {}", part1(&input));
-    println!("PART 2 = {}", part2(&input));
+    println!("PART 1 = {}", reach_goal(&input));
+    println!("PART 2 = {}", reach_gsg(&input));
     println!("Execution time: {:?}", now.elapsed());
 }
