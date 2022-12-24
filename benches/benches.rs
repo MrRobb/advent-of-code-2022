@@ -89,9 +89,13 @@ fn bench1(c: &mut Criterion) {
     // c.bench_function("Day 21 | Part 1", |b| b.iter(|| day21::compute_monkeys(&input21)));
     // c.bench_function("Day 21 | Part 2", |b| b.iter(|| day21::build_equation(&input21)));
 
-    let input23 = read_to_string("input/day23.txt").expect("Input file not found");
-    c.bench_function("Day 23 | Part 1", |b| b.iter(|| day23::move_elves_10(&input23)));
-    c.bench_function("Day 23 | Part 2", |b| b.iter(|| day23::converge_elves(&input23)));
+    // let input23 = read_to_string("input/day23.txt").expect("Input file not found");
+    // c.bench_function("Day 23 | Part 1", |b| b.iter(|| day23::move_elves_10(&input23)));
+    // c.bench_function("Day 23 | Part 2", |b| b.iter(|| day23::converge_elves(&input23)));
+
+    let input24 = read_to_string("input/day24.txt").expect("Input file not found");
+    c.bench_function("Day 24 | Part 1", |b| b.iter(|| day24::reach_goal(&input24)));
+    c.bench_function("Day 24 | Part 2", |b| b.iter(|| day24::reach_gsg(&input24)));
 }
 
 criterion_group!(benches, bench1);
