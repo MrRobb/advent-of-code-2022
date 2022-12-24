@@ -27,6 +27,7 @@ fn main() {
         day20::main,
         day21::main,
         day23::main,
+        day24::main,
     ];
 
     let now = std::time::Instant::now();
